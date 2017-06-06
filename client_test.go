@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/valyala/fasthttp/fasthttputil"
+	"github.com/erikdubbelboer/fasthttp/fasthttputil"
 )
 
 func TestClientDoWithCustomHeaders(t *testing.T) {

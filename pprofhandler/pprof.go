@@ -4,8 +4,8 @@ import (
 	"net/http/pprof"
 	"strings"
 
-	"github.com/valyala/fasthttp"
-	"github.com/valyala/fasthttp/fasthttpadaptor"
+	"github.com/erikdubbelboer/fasthttp"
+	"github.com/erikdubbelboer/fasthttp/fasthttpadaptor"
 )
 
 var (
