@@ -468,10 +468,10 @@ func decodeArgAppend(dst, src []byte) []byte {
 			if i+2 >= len(src) {
 				return append(dst, src[i:]...)
 			}
-			x2 := hex2intTable[src[i+2]]
 			x1 := hex2intTable[src[i+1]]
+			x2 := hex2intTable[src[i+2]]
 			if x1 == 16 || x2 == 16 {
-				dst = append(dst, '%')
+				dst = append(dst, c)
 			} else {
 				dst = append(dst, x1<<4|x2)
 				i += 2
@@ -497,16 +497,16 @@ func decodeArgAppendNoPlus(dst, src []byte) []byte {
 	}
 
 	// slow path
-	for i := 0; i < len(src); i++ {
+	for i, n := 0, len(src); i < n; i++ {
 		c := src[i]
 		if c == '%' {
-			if i+2 >= len(src) {
+			if i+2 >= n {
 				return append(dst, src[i:]...)
 			}
-			x2 := hex2intTable[src[i+2]]
 			x1 := hex2intTable[src[i+1]]
+			x2 := hex2intTable[src[i+2]]
 			if x1 == 16 || x2 == 16 {
-				dst = append(dst, '%')
+				dst = append(dst, c)
 			} else {
 				dst = append(dst, x1<<4|x2)
 				i += 2
