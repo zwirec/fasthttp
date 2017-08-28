@@ -42,7 +42,35 @@ func TestServerErrSmallBuffer(t *testing.T) {
 		},
 		ReadBufferSize: 20,
 		Logger:         logger,
+		LogAllErrors:   true,
 	}
+
+	testServerErrSmallBuffer(t, s, logger)
+
+	expectedErr := errSmallBuffer.Error()
+	if !strings.Contains(logger.out, expectedErr) {
+		t.Fatalf("unexpected log output: %q. Expecting %q", logger.out, expectedErr)
+	}
+}
+
+func TestServerErrSmallBufferNotLogged(t *testing.T) {
+	logger := &customLogger{}
+	s := &Server{
+		Handler: func(ctx *RequestCtx) {
+			ctx.WriteString("shouldn't be never called")
+		},
+		ReadBufferSize: 20,
+		Logger:         logger,
+	}
+
+	testServerErrSmallBuffer(t, s, logger)
+
+	if len(logger.out) > 0 {
+		t.Fatalf("unexpected log output: %q. Expecting no output", logger.out)
+	}
+}
+
+func testServerErrSmallBuffer(t *testing.T, s *Server, logger *customLogger) {
 	ln := fasthttputil.NewInmemoryListener()
 
 	serverCh := make(chan error, 1)
@@ -104,11 +132,6 @@ func TestServerErrSmallBuffer(t *testing.T) {
 		if err != nil {
 			t.Fatalf("unexpected server error: %s. Server log: %q", err, logger.out)
 		}
-	}
-
-	expectedErr := errSmallBuffer.Error()
-	if !strings.Contains(logger.out, expectedErr) {
-		t.Fatalf("unexpected log output: %q. Expecting %q", logger.out, expectedErr)
 	}
 }
 
