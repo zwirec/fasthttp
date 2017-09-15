@@ -541,11 +541,11 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
 * *Which GO versions are supported by fasthttp?*
 
   Go1.5+. Older versions won't be supported, since their standard package
-  [miss useful functions](https://github.com/erikdubbelboer/fasthttp/issues/5).
+  [miss useful functions](https://github.com/valyala/fasthttp/issues/5).
 
 * *Please provide real benchmark data and sever information*
 
-  See [this issue](https://github.com/erikdubbelboer/fasthttp/issues/4).
+  See [this issue](https://github.com/valyala/fasthttp/issues/4).
 
 * *Are there plans to add request routing to fasthttp?*
 
@@ -557,7 +557,7 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
     * [gramework](https://github.com/gramework/gramework)
     * [lu](https://github.com/vincentLiuxiang/lu)
 
-  See also [this issue](https://github.com/erikdubbelboer/fasthttp/issues/9) for more info.
+  See also [this issue](https://github.com/valyala/fasthttp/issues/9) for more info.
 
 * *I detected data race in fasthttp!*
 
@@ -573,4 +573,4 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
 
 * *I didn't find an answer for my question here*
 
-  Try exploring [these questions](https://github.com/erikdubbelboer/fasthttp/issues?q=label%3Aquestion).
+  Try exploring [these questions](https://github.com/valyala/fasthttp/issues?q=label%3Aquestion).
