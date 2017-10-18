@@ -34,7 +34,7 @@ func TestRequestCtxString(t *testing.T) {
 	}
 }
 
-func TestServerErrSmallBuffer(t *testing.T) {
+func TestServerErrSmallBufferLogged(t *testing.T) {
 	logger := &customLogger{}
 	s := &Server{
 		Handler: func(ctx *RequestCtx) {
