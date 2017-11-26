@@ -2489,6 +2489,31 @@ func TestServerConnError(t *testing.T) {
 	}
 }
 
+func TestServeConnHex2intTable(t *testing.T) {
+	s := &Server{
+		Handler: func(ctx *RequestCtx) {
+		},
+	}
+
+	rw := &readWriter{}
+	rw.r.WriteString("GET / HTTP/1.1\r\nHost: google.com\r\nTransfer-Encoding: chunked\r\n\r\n\xff")
+
+	ch := make(chan error)
+	go func() {
+		ch <- s.ServeConn(rw)
+	}()
+
+	var err error
+	select {
+	case err = <-ch:
+	case <-time.After(100 * time.Millisecond):
+		t.Fatalf("timeout")
+	}
+	if err.Error() != "empty hex number" {
+		t.Fatalf("expected: empty hex number")
+	}
+}
+
 func TestServeConnSingleRequest(t *testing.T) {
 	s := &Server{
 		Handler: func(ctx *RequestCtx) {
