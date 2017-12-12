@@ -14,6 +14,14 @@ import (
 	"time"
 )
 
+type TestLogger struct {
+	t *testing.T
+}
+
+func (t TestLogger) Printf(format string, args ...interface{}) {
+	t.t.Logf(format, args...)
+}
+
 func TestNewVHostPathRewriter(t *testing.T) {
 	var ctx RequestCtx
 	var req Request
@@ -57,7 +65,7 @@ func testPathNotFound(t *testing.T, pathNotFoundFunc RequestHandler) {
 	var ctx RequestCtx
 	var req Request
 	req.SetRequestURI("http//some.url/file")
-	ctx.Init(&req, nil, nil)
+	ctx.Init(&req, nil, TestLogger{t})
 
 	fs := &FS{
 		Root:         "./",
