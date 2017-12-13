@@ -481,8 +481,9 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
     helpers for projects based on fasthttp.
   * [fasthttp-routing](https://github.com/qiangxue/fasthttp-routing) - fast and
     powerful routing package for fasthttp servers.
-  * [fasthttprouter](https://github.com/buaazp/fasthttprouter) - a high
-    performance fasthttp request router that scales well.
+  * [fasthttprouter](https://github.com/thehowl/fasthttprouter) - a high
+    performance fasthttp request router that scales well (uses this fork,
+    erikdubbelboer, not valyala's code).
   * [lu](https://github.com/vincentLiuxiang/lu) - a high performance
     go middleware web framework which is based on fasthttp.
   * [websocket](https://github.com/leavengood/websocket) - Gorilla-based
@@ -553,7 +554,7 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
   Use third-party routers and web frameworks with fasthttp support:
 
     * [fasthttp-routing](https://github.com/qiangxue/fasthttp-routing)
-    * [fasthttprouter](https://github.com/buaazp/fasthttprouter)
+    * [fasthttprouter](https://github.com/thehowl/fasthttprouter)
     * [gramework](https://github.com/gramework/gramework)
     * [lu](https://github.com/vincentLiuxiang/lu)
 
