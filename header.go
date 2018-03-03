@@ -1620,6 +1620,7 @@ func (h *RequestHeader) parse(buf []byte) (int, error) {
 		if err != nil {
 			return 0, err
 		}
+		h.rawHeaders = append(h.rawHeaders[:0], buf[m:m+n]...)
 		h.rawHeadersParsed = true
 	} else {
 		var rawHeaders []byte
@@ -1870,8 +1871,7 @@ func (h *RequestHeader) parseHeaders(buf []byte) (int, error) {
 		v := peekArgBytes(h.h, strConnection)
 		h.connectionClose = !hasHeaderValue(v, strKeepAlive) && !hasHeaderValue(v, strKeepAliveCamelCase)
 	}
-
-	return len(buf) - len(s.b), nil
+	return s.hLen, nil
 }
 
 func (h *RequestHeader) parseRawHeaders() {
@@ -1922,6 +1922,9 @@ type headerScanner struct {
 	value []byte
 	err   error
 
+	// hLen stores header subslice len
+	hLen int
+
 	disableNormalizing bool
 }
 
@@ -1929,10 +1932,12 @@ func (s *headerScanner) next() bool {
 	bLen := len(s.b)
 	if bLen >= 2 && s.b[0] == '\r' && s.b[1] == '\n' {
 		s.b = s.b[2:]
+		s.hLen += 2
 		return false
 	}
 	if bLen >= 1 && s.b[0] == '\n' {
 		s.b = s.b[1:]
+		s.hLen++
 		return false
 	}
 	n := bytes.IndexByte(s.b, ':')
@@ -1946,6 +1951,7 @@ func (s *headerScanner) next() bool {
 	for len(s.b) > n && s.b[n] == ' ' {
 		n++
 	}
+	s.hLen += n
 	s.b = s.b[n:]
 	n = bytes.IndexByte(s.b, '\n')
 	if n < 0 {
@@ -1953,6 +1959,7 @@ func (s *headerScanner) next() bool {
 		return false
 	}
 	s.value = s.b[:n]
+	s.hLen += n + 1
 	s.b = s.b[n+1:]
 
 	if n > 0 && s.value[n-1] == '\r' {
