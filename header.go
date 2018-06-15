@@ -71,6 +71,9 @@ type RequestHeader struct {
 	cookies []argsKV
 
 	rawHeaders []byte
+
+	// stores an immutable copy of headers as they were recieved from the wire.
+	rawHeadersCopy []byte
 }
 
 // SetContentRange sets 'Content-Range: bytes startPos-endPos/contentLength'
@@ -1509,7 +1512,7 @@ func (h *RequestHeader) Header() []byte {
 //
 // The slice is not safe to use after the handler returns.
 func (h *RequestHeader) RawHeaders() []byte {
-	return h.rawHeaders
+	return h.rawHeadersCopy
 }
 
 // String returns request header representation.
@@ -1609,6 +1612,12 @@ func (h *RequestHeader) parse(buf []byte) (int, error) {
 	}
 
 	var n int
+	var rawHeaders []byte
+	rawHeaders, n, err = readRawHeaders(h.rawHeaders[:0], buf[m:])
+	if err != nil {
+		return 0, err
+	}
+	h.rawHeadersCopy = append(h.rawHeadersCopy[:0], rawHeaders...)
 	if !h.ignoreBody() || h.noHTTP11 {
 		n, err = h.parseHeaders(buf[m:])
 		if err != nil {
@@ -1617,11 +1626,6 @@ func (h *RequestHeader) parse(buf []byte) (int, error) {
 		h.rawHeaders = append(h.rawHeaders[:0], buf[m:m+n]...)
 		h.rawHeadersParsed = true
 	} else {
-		var rawHeaders []byte
-		rawHeaders, n, err = readRawHeaders(h.rawHeaders[:0], buf[m:])
-		if err != nil {
-			return 0, err
-		}
 		h.rawHeaders = rawHeaders
 	}
 	return m + n, nil

@@ -116,9 +116,7 @@ func TestRequestRawHeaders(t *testing.T) {
 		"\r\n"
 	t.Run("normalized", func(t *testing.T) {
 		s := "GET / HTTP/1.1\r\n" + kvs
-		exp := "Host: foobar\r\n" +
-			"Value: b\r\n" +
-			"\r\n"
+		exp := kvs
 		var h RequestHeader
 		br := bufio.NewReader(bytes.NewBufferString(s))
 		if err := h.Read(br); err != nil {
@@ -144,10 +142,7 @@ func TestRequestRawHeaders(t *testing.T) {
 			}
 			cl := fmt.Sprintf("Content-Length: %d\r\n", l)
 			s := "POST / HTTP/1.1\r\n" + cl + kvs + string(body)
-			exp := cl +
-				"Host: foobar\r\n" +
-				"Value: b\r\n" +
-				"\r\n"
+			exp := cl + kvs
 			var h RequestHeader
 			br := bufio.NewReader(bytes.NewBufferString(s))
 			if err := h.Read(br); err != nil {
@@ -167,9 +162,7 @@ func TestRequestRawHeaders(t *testing.T) {
 	}
 	t.Run("http10", func(t *testing.T) {
 		s := "GET / HTTP/1.0\r\n" + kvs
-		exp := "Host: foobar\r\n" +
-			"Value: b\r\n" +
-			"\r\n"
+		exp := kvs
 		var h RequestHeader
 		br := bufio.NewReader(bytes.NewBufferString(s))
 		if err := h.Read(br); err != nil {
