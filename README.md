@@ -559,6 +559,7 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
     * [fasthttprouter](https://github.com/thehowl/fasthttprouter)
     * [gramework](https://github.com/gramework/gramework)
     * [lu](https://github.com/vincentLiuxiang/lu)
+    * [Atreugo](https://github.com/savsgio/atreugo)
 
   See also [this issue](https://github.com/valyala/fasthttp/issues/9) for more info.
 
