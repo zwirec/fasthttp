@@ -487,7 +487,7 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
     erikdubbelboer, not valyala's code).
   * [lu](https://github.com/vincentLiuxiang/lu) - a high performance
     go middleware web framework which is based on fasthttp.
-  * [websocket](https://github.com/leavengood/websocket) - Gorilla-based
+  * [websocket](https://github.com/savsgio/websocket) - Gorilla-based
     websocket implementation for fasthttp.
   * [Atreugo](https://github.com/savsgio/atreugo) - Micro-framework to make simple the use of routing and middlewares in fasthttp.
 
@@ -522,7 +522,7 @@ uintBuf := fasthttp.AppendUint(nil, 1234)
   There are [plans](TODO) for adding HTTP/2.0 and WebSockets support
   in the future.
   In the mean time, third parties may use [RequestCtx.Hijack](https://godoc.org/github.com/erikdubbelboer/fasthttp#RequestCtx.Hijack)
-  for implementing these goodies. See [the first third-party websocket implementation on the top of fasthttp](https://github.com/leavengood/websocket).
+  for implementing these goodies. See [the first third-party websocket implementation on the top of fasthttp](https://github.com/savsgio/websocket).
 
 * *Are there known net/http advantages comparing to fasthttp?*
 
