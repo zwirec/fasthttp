@@ -288,7 +288,7 @@ func (a *Args) GetUfloatOrZero(key string) float64 {
 
 // GetBool returns boolean value for the given key.
 //
-// true is returned for '1', 'y' and 'yes' values,
+// true is returned for '1', 'y', 'yes', 'true', 't' and also their UPPERCASE analogs values,
 // otherwise false is returned.
 func (a *Args) GetBool(key string) bool {
 	switch strings.ToLower(string(a.Peek(key))) {
